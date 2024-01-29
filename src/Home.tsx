@@ -47,9 +47,9 @@ const Home = () => {
                 <Link to={`/read/${student.ID}`} className='btn btn-sm btn-info'>
                   Read
                 </Link>
-                <button className='btn btn-sm btn-primary mx-2'>
+                <Link   to={`/edit/${student?.ID}`}  className='btn btn-sm btn-primary mx-2'>
                   Edit
-                </button>
+                </Link>
                 <button className='btn btn-sm btn-danger'>
                   Delete
                 </button>

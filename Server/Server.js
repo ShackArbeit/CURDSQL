@@ -44,7 +44,15 @@ app.get('/read/:id',(req,res)=>{
       })
 
 })
-
+app.put('/update/:id',(req,res)=>{
+      const sql = 'UPDATE studentdata SET `Name`=?, `Email`=? WHERE id=?';
+      const id=req.params.id;
+      console.log(id)
+      Conntection.query(sql,[req.body.Name,req.body.Email,id],(err,result)=>{
+            if(err)return res.json({Message:'Error update student Data !!'})
+            return res.json(result)
+      })
+})
 
 app.listen(8000,()=>{
       Conntection.connect(function(err){
