@@ -11,6 +11,7 @@ let Conntection=mysql.createConnection({
 
 const app=express()
 app.use(cors())
+app.use(express.json())
 app.get('/',(req,res)=>{
       const sql='select * from studentdata';
       Conntection.query(sql,(err,result)=>{
@@ -19,6 +20,22 @@ app.get('/',(req,res)=>{
       })
 })
 
+app.post('/student',(req,res)=>{
+      const sql = 'INSERT INTO studentdata(`Name`, `Email`) VALUES (?, ?)';
+      console.log(sql)
+      const values=[
+            req.body.Name,
+            req.body.Email
+      ]
+      console.log(values)
+      Conntection.query(sql, values, (err, result) => {
+            if (err) {
+              console.error('MySQL Error:', err);
+              return res.json({ Message: 'Could not insert student data !!' });
+            }
+            return res.json(result);
+      });
+})
 
 app.listen(8000,()=>{
       Conntection.connect(function(err){
