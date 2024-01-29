@@ -22,12 +22,10 @@ app.get('/',(req,res)=>{
 
 app.post('/student',(req,res)=>{
       const sql = 'INSERT INTO studentdata(`Name`, `Email`) VALUES (?, ?)';
-      console.log(sql)
       const values=[
             req.body.Name,
             req.body.Email
       ]
-      console.log(values)
       Conntection.query(sql, values, (err, result) => {
             if (err) {
               console.error('MySQL Error:', err);
@@ -36,6 +34,17 @@ app.post('/student',(req,res)=>{
             return res.json(result);
       });
 })
+
+app.get('/read/:id',(req,res)=>{
+      const sql='select * from studentdata where id=?';
+      const id=req.params.id;
+      Conntection.query(sql,[id],(err,result)=>{
+            if(err)return res.json({Message:'Error inside Server'})
+            return res.json(result)
+      })
+
+})
+
 
 app.listen(8000,()=>{
       Conntection.connect(function(err){
