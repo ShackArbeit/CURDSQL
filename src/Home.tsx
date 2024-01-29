@@ -1,6 +1,6 @@
 import {useEffect,useState} from 'react'
 import {Link} from 'react-router-dom'
-
+import axios from 'axios'
 
 interface studentData{
    ID:number,
@@ -20,6 +20,14 @@ const Home = () => {
             }
             fetchData()
       },[])
+      const handleDelete=(ID:number)=>{
+          axios.delete(`http://localhost:8000/delete/${ID}`)
+          .then(response=>{
+            location.reload()
+            console.log(response)
+          })
+          .catch(error=>console.log(error))
+      }
 
   return (
    <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
@@ -47,10 +55,10 @@ const Home = () => {
                 <Link to={`/read/${student.ID}`} className='btn btn-sm btn-info'>
                   Read
                 </Link>
-                <Link   to={`/edit/${student?.ID}`}  className='btn btn-sm btn-primary mx-2'>
+                <Link to={`/edit/${student?.ID}`}  className='btn btn-sm btn-primary mx-2'>
                   Edit
                 </Link>
-                <button className='btn btn-sm btn-danger'>
+                <button onClick={()=>handleDelete(student.ID)} className='btn btn-sm btn-danger'>
                   Delete
                 </button>
               </td>

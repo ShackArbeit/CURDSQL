@@ -53,6 +53,15 @@ app.put('/update/:id',(req,res)=>{
             return res.json(result)
       })
 })
+app.delete('/delete/:id',(req,res)=>{
+      const sql='DELETE FROM studentdata WHERE ID=?'
+      const id=req.params.id;
+      console.log(id)
+      Conntection.query(sql,[id],(err,result)=>{
+            if(err)return res.json({Message:'Error update student Data !!'})
+            return res.json(result)
+      })
+})
 
 app.listen(8000,()=>{
       Conntection.connect(function(err){
